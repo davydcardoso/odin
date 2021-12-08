@@ -33,8 +33,8 @@ export class AddBroadcastingToQueue {
         name: to.email,
       },
       sender: {
-        email: process.env.MAIL_HOST,
-        name: process.env.MAIL_HOST,
+        email: process.env.MAIL_USER,
+        name: process.env.MAIL_USER,
       },
     });
 

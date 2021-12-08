@@ -1,4 +1,6 @@
-require("dotenv").config();
+import { config } from "dotenv-flow";
+
+config({ silent: true });
 
 import { errors } from "celebrate";
 import cors from "cors";
@@ -30,7 +32,7 @@ app.use(
   })
 );
 
-app.use("/api/v1", routes);
+app.use("/odin/v1", routes);
 app.use(errors());
 
 export { app };
