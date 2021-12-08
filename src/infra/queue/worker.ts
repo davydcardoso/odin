@@ -7,7 +7,15 @@ import { BullProvider } from "../providers/implementations/queue/BullProvider";
 import { DeliverMessageToRecipient } from "../../module/broadcasting/useCases/DeliverMessageToRecipient/DeliverMessageToRecipient";
 
 const mailQueueProvider = new BullProvider();
-const mailProvider = new MailtrapProvider({});
+const mailProvider = new MailtrapProvider({
+  host: process.env.MAIL_HOST,
+  port: 587,
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+  },
+  tls: { rejectUnauthorized: false },
+});
 const deliverMessageToRecipient = new DeliverMessageToRecipient(mailProvider);
 
 mailQueueProvider.process(async ({ data }) => {

@@ -9,14 +9,14 @@ export class BullProvider implements IMailQueueProvider {
   private queue: Queue;
 
   constructor() {
-    this.queue = new Queue("mail-queue", {
+    this.queue = new Queue("odin.mail-queue", {
       connection: redisConnection,
       defaultJobOptions: {
         removeOnComplete: true,
         attempts: 5,
         backoff: {
           type: "exponential",
-          delay: 5000,
+          delay: 50000,
         },
       },
     });
@@ -35,7 +35,7 @@ export class BullProvider implements IMailQueueProvider {
   }
 
   process(processFunction: Processor<IDeliverMessageJob>): void {
-    new Worker("mail-queue", processFunction, {
+    new Worker("odin.mail-queue", processFunction, {
       connection: redisConnection,
       concurrency: 100,
       limiter: {
@@ -44,7 +44,7 @@ export class BullProvider implements IMailQueueProvider {
       },
     });
 
-    new QueueScheduler("mail-queue", {
+    new QueueScheduler("odin.mail-queue", {
       connection: redisConnection,
     });
   }
