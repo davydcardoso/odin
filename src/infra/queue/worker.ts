@@ -9,12 +9,14 @@ import { DeliverMessageToRecipient } from "../../module/broadcasting/useCases/De
 const mailQueueProvider = new BullProvider();
 const mailProvider = new MailtrapProvider({
   host: process.env.MAIL_HOST,
-  port: 587,
+  port: 465,
+  ssl: false,
+  tls: true,
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
-  tls: { rejectUnauthorized: false },
+  // tls: { rejectUnauthorized: false },
 });
 const deliverMessageToRecipient = new DeliverMessageToRecipient(mailProvider);
 
