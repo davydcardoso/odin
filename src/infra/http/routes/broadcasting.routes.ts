@@ -14,6 +14,10 @@ broadcastingRoutes.post(
         name: Joi.string().required(),
         email: Joi.string().email().required(),
       }),
+      from: Joi.object({
+        name: Joi.string().required(),
+        email: Joi.string().email().required(),
+      }).optional(),
       subject: Joi.string().required(),
       body: Joi.any().required(),
     }),

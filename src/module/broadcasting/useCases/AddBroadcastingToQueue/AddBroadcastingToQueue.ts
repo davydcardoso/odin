@@ -7,6 +7,10 @@ type AddBroadcastingToQueueRequest = {
     name: string;
     email: string;
   };
+  from?: {
+    name: string;
+    email: string;
+  };
   subject: string;
   body: string;
 };
@@ -18,6 +22,7 @@ export class AddBroadcastingToQueue {
 
   async execute({
     to,
+    from,
     subject,
     body,
   }: AddBroadcastingToQueueRequest): Promise<AddBroadcastingToQueueResponse> {
@@ -33,8 +38,8 @@ export class AddBroadcastingToQueue {
         name: to.email,
       },
       sender: {
-        email: process.env.MAIL_USER,
-        name: process.env.MAIL_USER,
+        email: from.email ? from.email : process.env.MAIL_USER,
+        name: from.name ? from.name : process.env.MAIL_USER,
       },
     });
 

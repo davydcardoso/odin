@@ -11,7 +11,6 @@ export class DeliverMessageToRecipient {
     message,
     sender,
   }: DeliverMessageToRecipientRequest): Promise<void> {
-    console.log(`Send e-mail to:${recipient.email}`);
     await this.mailProvider
       .sendEmail(
         {

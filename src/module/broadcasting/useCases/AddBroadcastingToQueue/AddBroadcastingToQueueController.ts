@@ -12,6 +12,10 @@ type AddBroadcastingToQueueRequest = {
     name: string;
     email: string;
   };
+  from?: {
+    name: string;
+    email: string;
+  };
   subject: string;
   body: string;
 };
@@ -20,10 +24,11 @@ export class AddBroadcastingToQueueController implements Controller {
   constructor(private addBoardcastingToQueue: AddBroadcastingToQueue) {}
   async handle(request: AddBroadcastingToQueueRequest): Promise<HttpResponse> {
     try {
-      const { to, subject, body } = request;
+      const { to, from, subject, body } = request;
 
       const result = await this.addBoardcastingToQueue.execute({
         to,
+        from,
         subject,
         body,
       });
