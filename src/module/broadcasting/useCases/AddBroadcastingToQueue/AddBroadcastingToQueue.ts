@@ -38,8 +38,8 @@ export class AddBroadcastingToQueue {
         name: to.email,
       },
       sender: {
-        email: from.email ? from.email : process.env.MAIL_USER,
-        name: from.name ? from.name : process.env.MAIL_USER,
+        email: process.env.MAIL_USER,
+        name: from.email ? from.email : process.env.MAIL_USER,
       },
     });
 
