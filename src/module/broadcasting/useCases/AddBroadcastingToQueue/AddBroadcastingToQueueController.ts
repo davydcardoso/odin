@@ -5,7 +5,7 @@ import {
   HttpResponse,
   ok,
 } from "../../../../core/infra/HttpResponse";
-import { AddBroadcastingToQueue } from "./AddBroadcastingToQueue";
+import { AddMessageToBroadcastingQueue } from "./AddBroadcastingToQueue";
 
 type AddBroadcastingToQueueRequest = {
   to: {
@@ -16,8 +16,8 @@ type AddBroadcastingToQueueRequest = {
   body: string;
 };
 
-export class AddBroadcastingToQueueController implements Controller {
-  constructor(private addBoardcastingToQueue: AddBroadcastingToQueue) {}
+export class AddMessageToBroadcastingQueueController implements Controller {
+  constructor(private addBoardcastingToQueue: AddMessageToBroadcastingQueue) {}
   async handle(request: AddBroadcastingToQueueRequest): Promise<HttpResponse> {
     try {
       const { to, subject, body } = request;

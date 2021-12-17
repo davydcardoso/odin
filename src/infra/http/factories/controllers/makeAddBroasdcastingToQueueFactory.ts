@@ -1,14 +1,16 @@
 import { Controller } from "../../../../core/infra/Controller";
-import { AddBroadcastingToQueue } from "../../../../module/broadcasting/useCases/AddBroadcastingToQueue/AddBroadcastingToQueue";
-import { AddBroadcastingToQueueController } from "../../../../module/broadcasting/useCases/AddBroadcastingToQueue/AddBroadcastingToQueueController";
+import { AddMessageToBroadcastingQueue } from "../../../../module/broadcasting/useCases/AddBroadcastingToQueue/AddBroadcastingToQueue";
+
+import { AddMessageToBroadcastingQueueController } from "../../../../module/broadcasting/useCases/AddBroadcastingToQueue/AddBroadcastingToQueueController";
 import { BullProvider } from "../../../providers/implementations/queue/BullProvider";
 
-export function makeAddBroasdcastingToQueueFactory(): Controller {
+export function AddMessageToBroadcastingQueueFactory(): Controller {
   const mailQueueProvider = new BullProvider();
-  const addBoardcastingToQueue = new AddBroadcastingToQueue(mailQueueProvider);
-
-  const addBroadcastingToQueueController = new AddBroadcastingToQueueController(
-    addBoardcastingToQueue
+  const addMessageToBroadcastingQueue = new AddMessageToBroadcastingQueue(
+    mailQueueProvider
   );
-  return addBroadcastingToQueueController;
+
+  const addMessageToBroadcastingQueueController =
+    new AddMessageToBroadcastingQueueController(addMessageToBroadcastingQueue);
+  return addMessageToBroadcastingQueueController;
 }

@@ -19,22 +19,24 @@ model Users {
   @@map("users")
 }
 
-model Templates {
-  id          String  @id
-  title       String  @unique
-  content     String
-  is_default  Boolean @default(false)
-  is_document Boolean @default(false)
+model Contact {
+  id              String  @id
+  name            String?
+  email           String  @unique
+  is_unsubscribed Boolean @default(false)
+  is_blocked      Boolean @default(false)
+  is_bounced      Boolean @default(false)
+  integration_id  String? @unique
+
+  group_tab GroupTag
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  Messages Messages[]
-
-  @@map("templates")
+  @@map("contacts")
 }
 
-model Tag {
+model Tags {
   id             String  @id
   title          String  @unique
   integration_id String? @unique
@@ -42,7 +44,26 @@ model Tag {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
+  Templates Templates[]
+
   @@map("tags")
+}
+
+model Templates {
+  id          String  @id
+  title       String  @unique
+  content     String
+  is_default  Boolean @default(false)
+  is_document Boolean @default(false)
+  tag_id      String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  Messages Messages[]
+  tags     Tags       @relation(fields: [tag_id], references: [id])
+
+  @@map("templates")
 }
 
 enum EventType {
@@ -53,6 +74,12 @@ enum EventType {
   COMPLAINT
   REJECTED
   SENDED
+}
+
+enum GroupTag {
+  ROCKETZAPI_CLIENTS
+  SONIK_API_ERROS
+  RCOKETZAPI_MARKETING
 }
 
 model Messages {
@@ -83,19 +110,4 @@ model Sender {
   updated_at DateTime @default(now()) @updatedAt
 
   @@map("senders")
-}
-
-model Contact {
-  id              String  @id
-  name            String?
-  email           String  @unique
-  is_unsubscribed Boolean @default(false)
-  is_blocked      Boolean @default(false)
-  is_bounced      Boolean @default(false)
-  integration_id  String? @unique
-
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
-
-  @@map("contacts")
 }

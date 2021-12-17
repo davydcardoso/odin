@@ -19,14 +19,9 @@ const mailProvider = new MailtrapProvider({
 });
 
 const mailQueueProvider = new BullProvider();
-const syncMailQueueProvider = new SyncQueueProviders();
 
 const deliverMessageToRecipient = new DeliverMessageToRecipient(mailProvider);
 
 mailQueueProvider.process(async ({ data }) => {
-  await deliverMessageToRecipient.execute(data);
-});
-
-syncMailQueueProvider.process(async ({ data }) => {
   await deliverMessageToRecipient.execute(data);
 });

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { broadcastingRoutes } from "./broadcasting.routes";
+import { messagesRoutes } from "./messages.routes";
 
 const routes = Router();
 
-routes.use("/broadcasting", broadcastingRoutes);
+routes.use("/messages", messagesRoutes);
 
 export { routes };
