@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev:worker": "ts-node-dev src/infra/queue/worker.ts",
-    "dev:http":"ts-node-dev src/infra/http/server.ts"
+    "dev:http": "ts-node-dev src/infra/http/server.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
@@ -18,10 +18,12 @@
     "@types/morgan": "^1.9.3",
     "@types/nodemailer": "^6.4.4",
     "@types/uuid": "^8.3.3",
+    "prisma": "3.6.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "@prisma/client": "3.6.0",
     "bullmq": "^1.56.0",
     "celebrate": "^15.0.0",
     "cors": "^2.8.5",

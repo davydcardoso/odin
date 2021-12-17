@@ -7,11 +7,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Senders {
-  name        String  @id
-  email       String  @db.VarChar(200)
-  isValidated Boolean @default(false)
-  isDefault   Boolean @default(false)
+model Users {
+  id       String @id @default(uuid())
+  name     String @db.VarChar(180)
+  email    String @db.VarChar(180)
+  password String
+
+  created_at DateTime @default(now()) @db.Date
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp
+
+  @@map("users")
+}
+
+model Templates {
+  id          String  @id
+  title       String  @unique
+  content     String
+  is_default  Boolean @default(false)
+  is_document Boolean @default(false)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  Messages Messages[]
+
+  @@map("templates")
+}
+
+model Tag {
+  id             String  @id
+  title          String  @unique
+  integration_id String? @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@map("tags")
+}
+
+enum EventType {
+  DELIVERY
+  OPEN
+  CLICK
+  BOUNCE
+  COMPLAINT
+  REJECTED
+  SENDED
+}
+
+model Messages {
+  id               String  @id
+  subject          String
+  body             String
+  template_id      String?
+  sender_id        String
+  recipients_count Int     @default(0)
+
+  sent_at    DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+
+  template Templates? @relation(fields: [template_id], references: [id])
+
+  @@map("messages")
+}
+
+model Sender {
+  id           String  @id
+  name         String
+  email        String  @unique
+  is_validated Boolean @default(false)
+  is_default   Boolean @default(false)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 
   @@map("senders")
+}
+
+model Contact {
+  id              String  @id
+  name            String?
+  email           String  @unique
+  is_unsubscribed Boolean @default(false)
+  is_blocked      Boolean @default(false)
+  is_bounced      Boolean @default(false)
+  integration_id  String? @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@map("contacts")
 }
