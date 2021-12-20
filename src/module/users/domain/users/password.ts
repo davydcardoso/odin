@@ -36,8 +36,8 @@ export class Password {
 
     if (this.hashed) {
       hashed = this.password;
-      
-      return await compare(hashed, plainTextPassword);
+
+      return await compare(plainTextPassword, hashed);
     }
 
     return this.password === plainTextPassword;
