@@ -17,7 +17,7 @@ type AddBroadcastingToQueueRequest = {
 
 type AddBroadcastingToQueueResponse = Either<Error, object>;
 
-export class AddBroadcastingToQueue {
+export class AddMessageToBroadcastingQueue {
   constructor(private bullProvider: BullProvider) {}
 
   async execute({
