@@ -1,14 +1,14 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import { adaptRoute } from "../../../core/infra/adpters/ExpressRouteAdapter";
-import { AddMessageToBroadcastingQueueFactory } from "../factories/controllers/makeAddBroasdcastingToQueueFactory";
-import { makeSendMessageToGroupTagFactory } from "../factories/controllers/makeSendMessageToGroupTagFactory";
+import { AddMessageToBroadcastingQueueFactory } from "../factories/controllers/AddBroasdcastingToQueueFactory";
+import { makeSendMessageToGroupTagFactory } from "../factories/controllers/SendMessageToGroupTagFactory";
 import { adaptMiddleware } from "../../../core/infra/adpters/ExpressMiddlewareAdapter";
 import { makeEnsureAuthenticatedMiddleware } from "../factories/middlewares/EnsureAuthenticatedMiddlewareFactory";
 
-const messagesRoutes = Router();
+const messagesRouter = Router();
 
-messagesRoutes.post(
+messagesRouter.post(
   "/queue",
   celebrate({
     [Segments.HEADERS]: Joi.object({}).options({ allowUnknown: true }),
@@ -24,18 +24,18 @@ messagesRoutes.post(
   adaptRoute(AddMessageToBroadcastingQueueFactory())
 );
 
-messagesRoutes.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()));
+messagesRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()));
 
-messagesRoutes.post(
+messagesRouter.post(
   "/:groupTag/send",
   adaptRoute(makeSendMessageToGroupTagFactory())
 );
 
-messagesRoutes.post(
+messagesRouter.post(
   "/",
   celebrate({
     [Segments.BODY]: Joi.object({}),
   })
 );
 
-export { messagesRoutes };
+export { messagesRouter };

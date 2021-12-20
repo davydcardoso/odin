@@ -10,7 +10,7 @@ import { routes } from "./routes";
 
 const app = express();
 
-app.use(morgan("dev"));
+app.use(morgan("tiny"));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");

@@ -10,11 +10,11 @@ datasource db {
 model Users {
   id       String @id @default(uuid())
   name     String @db.VarChar(180)
-  email    String @db.VarChar(180)
+  email    String @unique @db.VarChar(180)
   password String
 
-  created_at DateTime @default(now()) @db.Date
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp
+  created_at DateTime? @default(now()) @db.Date
+  updated_at DateTime? @default(now()) @updatedAt @db.Timestamp
 
   @@map("users")
 }

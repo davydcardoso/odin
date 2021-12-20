@@ -25,15 +25,18 @@ export class EnsureAuthenticatedMiddleware implements Middleware {
     try {
       const { accessToken } = request;
 
+      const [, token] = accessToken.split(" ");
+
       if (accessToken) {
         try {
-          const decoded = decode(accessToken) as DecodedJwt;
+          const decoded = decode(token) as DecodedJwt;
 
           return ok({ userId: decoded.sub });
         } catch (err) {
           return forbidden(new AccessDeniedError());
         }
       }
+      return forbidden(new AccessDeniedError());
     } catch (err) {
       return fail(err);
     }

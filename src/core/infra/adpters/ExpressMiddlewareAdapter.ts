@@ -5,7 +5,7 @@ import { Middleware } from "../Middleware";
 export const adaptMiddleware = (middleware: Middleware) => {
   return async (request: Request, response: Response, next: NextFunction) => {
     const requestData = {
-      accessToken: request.headers?.["x_token_api"],
+      accessToken: request.headers.authorization,
       ...(request.headers || {}),
     };
 
