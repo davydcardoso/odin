@@ -1,7 +1,6 @@
 import { Either, left, right } from "../../../../core/logic/Either";
 import { JWT } from "../../domain/users/jwt";
 import { User } from "../../domain/users/users";
-import { UserMapper } from "../../mappers/UserMapper";
 import { IUserRepository } from "../../repositories/IUserRepository";
 import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
@@ -35,7 +34,7 @@ export class AuthenticateUser {
 
     const isPasswordInvalid = await user.password.comparePassword(password);
 
-    if (isPasswordInvalid) {
+    if (!isPasswordInvalid) {
       return left(new InvalidEmailOrPasswordError());
     }
 

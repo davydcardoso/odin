@@ -6,6 +6,7 @@ import { MailtrapProvider } from "../providers/implementations/mail/MailtrapProv
 import { BullProvider } from "../providers/implementations/queue/BullProvider";
 import { DeliverMessageToRecipient } from "../../module/broadcasting/useCases/DeliverMessageToRecipient/DeliverMessageToRecipient";
 import { SyncQueueProviders } from "../providers/implementations/queue/SyncQueueProviders";
+import { SESProvider } from "../providers/implementations/mail/AmazonSESProvider";
 
 const mailProvider = new MailtrapProvider({
   host: process.env.MAIL_HOST,
@@ -18,9 +19,11 @@ const mailProvider = new MailtrapProvider({
   },
 });
 
+const mailSESProvider = new SESProvider();
+
 const mailQueueProvider = new BullProvider();
 
-const deliverMessageToRecipient = new DeliverMessageToRecipient(mailProvider);
+const deliverMessageToRecipient = new DeliverMessageToRecipient(mailSESProvider);
 
 mailQueueProvider.process(async ({ data }) => {
   await deliverMessageToRecipient.execute(data);
