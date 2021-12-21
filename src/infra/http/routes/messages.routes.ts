@@ -8,6 +8,8 @@ import { makeEnsureAuthenticatedMiddleware } from "../factories/middlewares/Ensu
 
 const messagesRouter = Router();
 
+messagesRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()));
+
 messagesRouter.post(
   "/queue",
   celebrate({
@@ -27,8 +29,6 @@ messagesRouter.post(
   }),
   adaptRoute(AddMessageToBroadcastingQueueFactory())
 );
-
-messagesRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()));
 
 messagesRouter.post(
   "/:groupTag/send",

@@ -25,9 +25,9 @@ export class EnsureAuthenticatedMiddleware implements Middleware {
     try {
       const { accessToken } = request;
 
-      const [, token] = accessToken.split(" ");
-
       if (accessToken) {
+        const [, token] = accessToken.split(" ");
+
         try {
           const decoded = decode(token) as DecodedJwt;
 
